@@ -1,0 +1,21 @@
+name: virnavi_ai_agent_compose
+description: "Ties Flutter UI to MCP tool results. Widgets rebuild reactively when AI agents invoke tools — no setState needed."
+version: 0.1.0-dev.1
+repository: https://github.com/virnavi/virnavi_ai_agent_mcp
+issue_tracker: https://github.com/virnavi/virnavi_ai_agent_mcp/issues
+
+topics:
+  - mcp
+  - ai
+  - agent
+  - flutter
+  - reactive
+
+environment:
+  sdk: ^3.9.0
+  flutter: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  virnavi_ai_agent_mcp: ^0.1.0-dev.1
