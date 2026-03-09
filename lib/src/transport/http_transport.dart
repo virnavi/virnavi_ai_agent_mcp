@@ -15,7 +15,7 @@ import '../core/dispatcher.dart';
 /// await transport.start();
 /// ```
 ///
-/// JSON-RPC 2.0 endpoint: POST http://localhost:<port>/mcp
+/// JSON-RPC 2.0 endpoint: `POST http://localhost:<port>/mcp`
 ///
 /// Supported methods:
 ///   tools/list           — list all registered tools

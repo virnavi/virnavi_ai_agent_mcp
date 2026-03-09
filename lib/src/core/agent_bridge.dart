@@ -1,5 +1,6 @@
 import '../definition/resource_definition.dart';
 import '../definition/tool_definition.dart';
+import '../result/tool_result.dart';
 import '../transport/http_transport.dart';
 import '../transport/vm_service_transport.dart';
 import 'dispatcher.dart';
@@ -86,4 +87,9 @@ class AgentBridge {
     _registry.registerResource(resource);
     return this;
   }
+
+  /// Calls a registered tool by name — useful for in-app AI integrations
+  /// where the AI's function calls should be routed through MCP tools.
+  Future<ToolResult> callTool(String name, Map<String, dynamic> args) =>
+      _dispatcher.callTool(name, args);
 }

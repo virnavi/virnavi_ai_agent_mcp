@@ -8,3 +8,5 @@ export 'src/definition/schema.dart';
 export 'src/definition/tool_definition.dart';
 export 'src/result/resource_content.dart';
 export 'src/result/tool_result.dart';
+export 'src/mcp_model_definition.dart';
+export 'src/mcp_summary.dart';

@@ -37,6 +37,12 @@ class Dispatcher {
         data: {'error': 'Unknown resource: "$uri"'},
       );
     }
-    return resource.reader();
+    try {
+      return await resource.reader();
+    } catch (e, stack) {
+      return ResourceContent(
+        data: {'error': 'Resource "$uri" threw an exception: $e\n$stack'},
+      );
+    }
   }
 }

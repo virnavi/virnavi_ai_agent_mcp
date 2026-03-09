@@ -3,6 +3,7 @@ abstract class SchemaType {
   Map<String, dynamic> toJson();
 }
 
+/// JSON Schema type for string values.
 class StringSchema extends SchemaType {
   final String? description;
   final List<String>? enumValues;
@@ -17,6 +18,7 @@ class StringSchema extends SchemaType {
       };
 }
 
+/// JSON Schema type for integer values.
 class IntegerSchema extends SchemaType {
   final String? description;
   final int? minimum;
@@ -33,6 +35,7 @@ class IntegerSchema extends SchemaType {
       };
 }
 
+/// JSON Schema type for numeric (double/int) values.
 class NumberSchema extends SchemaType {
   final String? description;
   final num? minimum;
@@ -49,6 +52,7 @@ class NumberSchema extends SchemaType {
       };
 }
 
+/// JSON Schema type for boolean values.
 class BooleanSchema extends SchemaType {
   final String? description;
 
@@ -61,6 +65,7 @@ class BooleanSchema extends SchemaType {
       };
 }
 
+/// JSON Schema type for array values.
 class ArraySchema extends SchemaType {
   final String? description;
   final SchemaType items;
@@ -75,6 +80,7 @@ class ArraySchema extends SchemaType {
       };
 }
 
+/// JSON Schema type for object values with named properties.
 class ObjectSchema extends SchemaType {
   final String? description;
   final Map<String, SchemaType> properties;

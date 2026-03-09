@@ -1,28 +1,26 @@
 /// Marks a Dart class as an MCP model.
 ///
-/// Works alongside @JsonSerializable. The generator produces an
-/// ObjectSchema for this class, respecting @JsonKey(name:) overrides
-/// and @McpField metadata on each field.
+/// The generator produces an [ObjectSchema] for this class, respecting
+/// @JsonKey(name:) overrides and @McpField metadata on each field.
+///
+/// [name] is optional. If provided it is used as the model's unique identifier
+/// segment; if omitted the class name is used.
+/// The full model ID is: `{package}/{name ?? ClassName}`
 ///
 /// Example:
 /// ```dart
-/// @McpModel()
-/// @JsonSerializable()
+/// @McpModel(name: 'create_task_input')
 /// class CreateTaskInput {
 ///   @McpField(description: 'Task title')
 ///   final String title;
-///
-///   @McpField(description: 'Optional details')
-///   final String? description;
-///
-///   const CreateTaskInput({required this.title, this.description});
-///   factory CreateTaskInput.fromJson(Map<String, dynamic> json) =>
-///       _$CreateTaskInputFromJson(json);
-///   Map<String, dynamic> toJson() => _$CreateTaskInputToJson(this);
+///   ...
 /// }
 /// ```
 class McpModel {
-  const McpModel();
+  /// Optional name. Model ID = `{package}/{name ?? ClassName}`.
+  final String? name;
+
+  const McpModel({this.name});
 }
 
 /// Metadata for a field inside an @McpModel class.
@@ -87,3 +85,33 @@ class McpParam {
   const McpParam({required this.description, this.required = true});
 }
 
+/// Put on a Flutter Widget class to bind it to an @McpModel.
+///
+/// The generator creates a static `fromStore()` method on an extension of
+/// the annotated widget class. That method wraps [McpResultBuilder] and
+/// automatically parses the bound model from the store — no boilerplate needed.
+///
+/// The widget's model ID (used as the [McpResultStore] key) is taken from the
+/// @McpModel annotation on [model]: `{package}/{name ?? ClassName}`.
+///
+/// Example:
+/// ```dart
+/// @McpView(model: UserResult)
+/// class UserCard extends StatelessWidget {
+///   final UserResult data;
+///   const UserCard({super.key, required this.data});
+///   ...
+/// }
+///
+/// // Usage (from generated extension):
+/// UserCardMcpViewExtension.fromStore(
+///   _store,
+///   builder: (ctx, data) => UserCard(data: data),
+/// )
+/// ```
+class McpView {
+  /// The @McpModel type this widget is bound to.
+  final Type model;
+
+  const McpView({required this.model});
+}
