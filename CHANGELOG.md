@@ -1,3 +1,17 @@
+## 0.0.3
+
+### New features
+
+- **`McpModelDefinition.nestedDefinitions`** — list of `McpModelDefinition` for nested `@McpModel` types referenced by a model's fields. `McpSummary.bind()` now registers all nested definitions recursively, so callers never need to list them explicitly.
+- **`McpModelDefinition.nestedExtractors`** — map of `modelId → (parentJson) → nestedJson?` functions. Used by the compose layer to automatically propagate nested model data into `McpResultStore` when a parent tool result arrives.
+- **`McpSummary.bindViews()`** — default no-op stub added to the base class. The compose package overrides this via an extension; without compose, calling `bindWithViews()` no longer throws a compile error.
+
+### Bug fixes
+
+- **`@McpParam.required`** changed from `bool` (default `true`) to `bool?` (default `null`). When `null`, the generator infers required status from the parameter's nullability and presence of a default value. Previously, every `@McpParam(description: '...')` without an explicit `required: false` forced the parameter into the schema's `required` list regardless of its type.
+
+---
+
 ## 0.0.1
 
 Initial release.

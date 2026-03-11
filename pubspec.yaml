@@ -1,6 +1,6 @@
 name: virnavi_ai_agent_mcp
 description: "Expose Flutter app methods to AI agents via the Model Context Protocol (MCP). Register tools with annotations or code — AI agents call them over JSON-RPC 2.0."
-version: 0.0.1
+version: 0.0.3
 repository: https://github.com/virnavi/virnavi_ai_agent_mcp
 issue_tracker: https://github.com/virnavi/virnavi_ai_agent_mcp/issues
 

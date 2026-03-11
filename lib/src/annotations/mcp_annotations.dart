@@ -78,11 +78,18 @@ class McpTool {
 /// Metadata for a primitive parameter of an @McpTool method.
 ///
 /// Not needed for @McpModel parameters — those are self-describing.
+///
+/// [required] defaults to null, which means the generator infers required
+/// status from the parameter type (non-nullable, no default → required).
+/// Set explicitly to override: `@McpParam(description: '...', required: false)`.
 class McpParam {
   final String description;
-  final bool required;
 
-  const McpParam({required this.description, this.required = true});
+  /// When null (default), required is inferred from the parameter's type and
+  /// default value. Set to true/false to override that inference.
+  final bool? required;
+
+  const McpParam({required this.description, this.required});
 }
 
 /// Put on a Flutter Widget class to bind it to an @McpModel.

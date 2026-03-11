@@ -89,13 +89,25 @@ class McpSummary {
         toolMap[t.name] = t;
       }
     }
+    // Flatten nested definitions recursively (depth-first, first-occurrence wins).
+    final modelMap = <String, McpModelDefinition>{};
+    void register(McpModelDefinition def) {
+      if (modelMap.containsKey(def.id)) return;
+      modelMap[def.id] = def;
+      for (final nested in def.nestedDefinitions) {
+        register(nested);
+      }
+    }
+    for (final m in models) {
+      register(m);
+    }
     return McpSummary._bound(
       id: id,
       toolNames: toolNames,
       modelIds: modelIds,
       viewModelIds: viewModelIds,
       tools: toolMap,
-      models: {for (final m in models) m.id: m},
+      models: modelMap,
     );
   }
 
@@ -103,6 +115,11 @@ class McpSummary {
   /// Returns null if no model definition is registered for [modelId].
   Object? deserializeModel(String modelId, Map<String, dynamic> json) =>
       models[modelId]?.fromJson(json);
+
+  /// Binds [views] to this summary. Views are resolved at runtime by the
+  /// compose layer via model ID; by default this returns the summary unchanged.
+  /// Override or extend in the compose package if view storage is needed.
+  McpSummary bindViews(List<dynamic> views) => this;
 
   /// Returns a new [McpSummary] whose sets are the union of this and [other].
   /// If [id] is empty, [other]'s id is used.
